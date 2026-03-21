@@ -1,0 +1,10 @@
+# Bloquear cualquier petición a .env
+<FilesMatch "^\.env">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# OPCIONAL: permitir CORS si vas a consumir desde otro dominio
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>

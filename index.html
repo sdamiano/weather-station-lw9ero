@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Meteorológico</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .refresh-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #00bcd4;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        .refresh-btn:hover {
+            background: #0097a7;
+            transform: rotate(180deg);
+        }
+        .loading {
+            opacity: 0.5;
+        }
+        .status-indicator {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #4caf50;
+            z-index: 1000;
+        }
+        .status-indicator.error {
+            background: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="status-indicator" id="statusIndicator"></div>
+    <button class="refresh-btn" onclick="refreshWeather()" title="Actualizar">
+        <i class="fas fa-sync-alt"></i>
+    </button>
+
+    <h1 class="station-title">Estación Meteorológica Experimental LW9ERO<br>Veinticinco de Mayo - Buenos Aires</h1>
+
+    <div class="dashboard" id="dashboard">
+        <div class="card" id="tempCard">
+            <div class="icon"><i class="fas fa-thermometer-half"></i></div>
+            <div class="info">
+                <h2 id="temperature">--</h2>
+                <p>Temperatura</p>
+            </div>
+        </div>
+
+        <div class="card" id="feelsCard">
+            <div class="icon"><i class="fas fa-thermometer-three-quarters"></i></div>
+            <div class="info">
+                <h2 id="feels-like">--</h2>
+                <p>Sensación térmica</p>
+            </div>
+        </div>
+
+        <div class="card" id="dewCard">
+            <div class="icon"><i class="fas fa-eye"></i></div>
+            <div class="info">
+                <h2 id="dew-point">--</h2>
+                <p>Punto de rocío</p>
+            </div>
+        </div>
+
+        <div class="card" id="humCard">
+            <div class="icon"><i class="fas fa-tint"></i></div>
+            <div class="info">
+                <h2 id="humidity">--</h2>
+                <p>Humedad</p>
+            </div>
+        </div>
+
+        <div class="card" id="pressureCard">
+            <div class="icon"><i class="fas fa-tachometer-alt"></i></div>
+            <div class="info">
+                <h2 id="pressure">--</h2>
+                <p>Presión</p>
+            </div>
+        </div>
+
+        <div class="card" id="windSpeedCard">
+            <div class="icon"><i class="fas fa-wind"></i></div>
+            <div class="info">
+                <h2 id="wind-speed">--</h2>
+                <p>Velocidad del viento</p>
+            </div>
+        </div>
+
+        <div class="card" id="windDirCard">
+            <div class="icon"><i class="fas fa-compass"></i></div>
+            <div class="info">
+                <h2 id="wind-dir">--</h2>
+                <p>Dirección del viento</p>
+            </div>
+        </div>
+
+        <div class="card" id="precipCard">
+            <div class="icon"><i class="fas fa-cloud-rain"></i></div>
+            <div class="info">
+                <h2 id="precip">--</h2>
+                <p>Precipitación</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p id="timestamp">Cargando datos...</p>
+        <p id="debugInfo"></p>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
+
+
+
