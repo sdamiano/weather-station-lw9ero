@@ -115,3 +115,22 @@ function refreshWeather() {
         }
     }, 1000);
 }
+
+// ============================================
+// Inicializar Windy API para pronóstico
+// ============================================
+// Coordenadas: Veinticinco de Mayo, Buenos Aires, Argentina
+const windyOptions = {
+    key: 'jNBYXvK9Z6hWpfgzCwF6nYnw9nyklpLH', // API key de Windy (Map Forecast)
+    verbose: false,
+    lat: -35.425495,      // Veinticinco de Mayo
+    lon: -60.168502,      // Buenos Aires
+    zoom: 10,
+    timestamp: new Date().getTime() / 1000
+};
+
+windyInit(windyOptions, windyAPI => {
+    const { map } = windyAPI;
+    // El mapa ya está inicializado y listo para usar
+    // Leaflet y Windy están completamente funcionales
+});
