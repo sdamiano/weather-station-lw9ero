@@ -1,0 +1,151 @@
+/* ================================
+   STYLE MINT - Para 25Clima-Centro
+   Colores suaves: verdes pastel, menta, agua
+   ================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(180deg, #2d5a54, #3a7373, #4a8a7f);
+    color: #fff;
+    padding: 20px;
+}
+
+.station-title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 30px auto 40px auto;
+    color: #7cdbcd;
+    text-shadow: 0 2px 10px rgba(124, 219, 205, 0.2);
+    width: 100%;
+    line-height: 1.4;
+    display: block;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: transform 0.3s;
+    border: 1px solid rgba(124, 219, 205, 0.2);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(124, 219, 205, 0.4);
+}
+
+.icon {
+    font-size: 3rem;
+    color: #6bc8bb;
+}
+
+.info h2 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+.info p {
+    font-size: 0.9rem;
+    color: #a8ddd8;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #a8ddd8;
+}
+
+.refresh-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #5ba8a0;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 1000;
+}
+
+.refresh-btn:hover {
+    background: #7bc8bb;
+    transform: rotate(180deg);
+}
+
+.loading {
+    opacity: 0.5;
+}
+
+.status-indicator {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #4caf50;
+    z-index: 1000;
+}
+
+.status-indicator.error {
+    background: #f44336;
+}
+
+/* Estilos para el mapa Windy */
+.windy-wrapper {
+    max-width: 1200px;
+    margin: 40px auto 0 auto;
+    padding: 0 20px;
+}
+
+#windy {
+    width: 100%;
+    height: 500px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border: 2px solid rgba(124, 219, 205, 0.3);
+}
+
+@media (max-width: 768px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+    
+    .card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #windy {
+        height: 400px;
+    }
+
+    .station-title {
+        font-size: 1.3rem;
+        margin: 20px auto 30px auto;
+    }
+}
