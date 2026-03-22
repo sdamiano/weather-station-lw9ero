@@ -120,25 +120,42 @@ function refreshWeather() {
 // Inicializar Windy API para pronóstico
 // ============================================
 // Coordenadas: Veinticinco de Mayo, Buenos Aires, Argentina
-if (typeof windyInit !== 'undefined') {
+function initWindyMap() {
+    if (typeof windyInit === 'undefined') {
+        console.warn('Windy API no está disponible');
+        return;
+    }
+
     try {
+        const windyContainer = document.getElementById('windy');
+        if (!windyContainer) {
+            console.error('Contenedor #windy no encontrado');
+            return;
+        }
+
         const windyOptions = {
             key: 'jNBYXvK9Z6hWpfgzCwF6nYnw9nyklpLH', // API key de Windy (Map Forecast)
             verbose: false,
             lat: -35.425495,      // Veinticinco de Mayo
             lon: -60.168502,      // Buenos Aires
             zoom: 10,
-            timestamp: new Date().getTime() / 1000
         };
 
         windyInit(windyOptions, windyAPI => {
             const { map } = windyAPI;
+            console.log('✓ Windy mapa inicializado correctamente');
             // El mapa ya está inicializado y listo para usar
             // Leaflet y Windy están completamente funcionales
         });
     } catch (error) {
         console.error('Error inicializando Windy:', error);
     }
+}
+
+// Esperar a que el DOM esté completamente cargado (crítico para mobile)
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initWindyMap);
 } else {
-    console.warn('Windy API no está disponible');
+    // Si el script se carga después de DOMContentLoaded
+    initWindyMap();
 }
