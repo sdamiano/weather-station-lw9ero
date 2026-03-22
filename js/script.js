@@ -1,9 +1,64 @@
+// ============================================
+// Convertir grados a dirección cardinal
+// ============================================
+function degreesToCardinal(degrees) {
+    // Normalizar grados a 0-360
+    degrees = degrees % 360;
+    if (degrees < 0) degrees += 360;
+    
+    // Rosa de 16 vientos (22.5° por sector)
+    const directions = [
+        { label: 'N',   min: 348.75, max: 11.25 },
+        { label: 'NNE', min: 11.25,  max: 33.75 },
+        { label: 'NE',  min: 33.75,  max: 56.25 },
+        { label: 'ENE', min: 56.25,  max: 78.75 },
+        { label: 'E',   min: 78.75,  max: 101.25 },
+        { label: 'ESE', min: 101.25, max: 123.75 },
+        { label: 'SE',  min: 123.75, max: 146.25 },
+        { label: 'SSE', min: 146.25, max: 168.75 },
+        { label: 'S',   min: 168.75, max: 191.25 },
+        { label: 'SSO', min: 191.25, max: 213.75 },
+        { label: 'SO',  min: 213.75, max: 236.25 },
+        { label: 'OSO', min: 236.25, max: 258.75 },
+        { label: 'O',   min: 258.75, max: 281.25 },
+        { label: 'ONO', min: 281.25, max: 303.75 },
+        { label: 'NO',  min: 303.75, max: 326.25 },
+        { label: 'NNO', min: 326.25, max: 348.75 }
+    ];
+    
+    // Buscar el rango que contenga los grados
+    for (let dir of directions) {
+        if (dir.label === 'N') {
+            // N es especial: puede ser 348.75-360 o 0-11.25
+            if (degrees >= dir.min || degrees < 11.25) return dir.label;
+        } else if (degrees >= dir.min && degrees < dir.max) {
+            return dir.label;
+        }
+    }
+    
+    return 'N'; // Default
+}
+
 function updateWeather() {
     fetch('api.php')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
+            // Validar que los datos sean válidos
+            if (!data.observations || !Array.isArray(data.observations) || data.observations.length === 0) {
+                throw new Error('Datos inválidos: no hay observaciones');
+            }
+
             const obs = data.observations[0];
             const metric = obs.metric;
+
+            if (!metric) {
+                throw new Error('Datos inválidos: no hay métricas');
+            }
             
             // Actualizar valores
             document.getElementById('temperature').textContent = `${metric.temp}°C`;
@@ -14,9 +69,9 @@ function updateWeather() {
             
             // Viento - Velocidad y Dirección separadas
             document.getElementById('wind-speed').textContent = `${metric.windSpeed} km/h`;
-            const windDirection = obs.winddir || '--';
-            const directionText = obs.winddirCardinal ? ` ${obs.winddirCardinal}` : '';
-            document.getElementById('wind-dir').textContent = `${windDirection}°${directionText}`;
+            const windDegrees = obs.winddir || 0;
+            const windCardinal = degreesToCardinal(windDegrees);
+            document.getElementById('wind-dir').textContent = `${windCardinal} (${windDegrees}°)`;
             
             // Precipitación
             let precip = '--';
@@ -32,13 +87,31 @@ function updateWeather() {
             // Timestamp
             const timestamp = new Date(obs.epoch * 1000).toLocaleString();
             document.getElementById('timestamp').textContent = `Última actualización: ${timestamp}`;
+            
+            // Limpiar indicador de error
+            document.getElementById('statusIndicator').classList.remove('error');
         })
         .catch(error => {
-            console.error('Error:', error);
-            document.getElementById('timestamp').textContent = 'Error al cargar datos';
+            console.error('Error completo:', error);
+            document.getElementById('timestamp').textContent = `Error: ${error.message}`;
+            document.getElementById('statusIndicator').classList.add('error');
         });
 }
 
 // Actualizar datos cada 5 minutos
 updateWeather();
 setInterval(updateWeather, 300000);
+
+// Función para actualizar manualmente (desde botón)
+function refreshWeather() {
+    const btn = document.querySelector('.refresh-btn i');
+    if (btn) {
+        btn.style.transform = 'rotate(180deg)';
+    }
+    updateWeather();
+    setTimeout(() => {
+        if (btn) {
+            btn.style.transform = 'rotate(0deg)';
+        }
+    }, 1000);
+}
