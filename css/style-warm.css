@@ -1,3 +1,8 @@
+/* ================================
+   STYLE WARM - Para 25clima-agumin
+   Tema oscuro VSCode con acentos ámbar/dorado
+   ================================ */
+
 * {
     margin: 0;
     padding: 0;
@@ -6,7 +11,7 @@
 }
 
 body {
-    background: linear-gradient(180deg, #1e1e1e, #252526, #1e1e1e);
+    background: linear-gradient(180deg, #1e1e1e, #2a2a2a, #1e1e1e);
     color: #d4d4d4;
     padding: 20px;
 }
@@ -15,8 +20,8 @@ body {
     text-align: center;
     font-size: 1.8rem;
     margin: 30px auto 40px auto;
-    color: #007acc;
-    text-shadow: 0 2px 10px rgba(0, 122, 204, 0.3);
+    color: #ce9178;
+    text-shadow: 0 2px 10px rgba(206, 145, 120, 0.2);
     width: 100%;
     line-height: 1.4;
     display: block;
@@ -39,18 +44,18 @@ body {
     align-items: center;
     gap: 20px;
     transition: transform 0.3s;
-    border: 1px solid rgba(0, 122, 204, 0.2);
+    border: 1px solid rgba(206, 145, 120, 0.2);
 }
 
 .card:hover {
     transform: translateY(-5px);
     background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(0, 122, 204, 0.4);
+    border-color: rgba(206, 145, 120, 0.4);
 }
 
 .icon {
     font-size: 3rem;
-    color: #0098cc;
+    color: #d4a574;
 }
 
 .info h2 {
@@ -75,7 +80,7 @@ body {
     position: fixed;
     top: 20px;
     right: 20px;
-    background: #007acc;
+    background: #d4a574;
     color: white;
     border: none;
     border-radius: 50%;
@@ -88,7 +93,7 @@ body {
 }
 
 .refresh-btn:hover {
-    background: #0098cc;
+    background: #e8b89f;
     transform: rotate(180deg);
 }
 
@@ -103,7 +108,7 @@ body {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: #4ec9b0;
+    background: #6a9955;
     z-index: 1000;
 }
 
@@ -123,7 +128,7 @@ body {
     height: 500px;
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    border: 2px solid rgba(0, 122, 204, 0.3);
+    border: 2px solid rgba(206, 145, 120, 0.3);
 }
 
 @media (max-width: 768px) {
@@ -143,5 +148,32 @@ body {
     .station-title {
         font-size: 1.3rem;
         margin: 20px auto 30px auto;
+    }
+}
+}
+
+.status-indicator {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #4caf50;
+    z-index: 1000;
+}
+
+.status-indicator.error {
+    background: #f44336;
+}
+
+@media (max-width: 768px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+    
+    .card {
+        flex-direction: column;
+        text-align: center;
     }
 }
